@@ -1,0 +1,18 @@
+:root {
+  color-scheme: light;
+  --canvas: #fcfcfd;
+  --bg: #f0f1f3;
+  --panel: #f6f7f8;
+  --panel-header: #e9ebed;
+  --border: #d2d6db;
+  --border-strong: #b8bec6;
+  --text: #1f2328;
+  --text-muted: #616b76;
+  --accent: #2c6fb3;
+  --accent-soft: rgb(44 111 179 / 10%);
+  --ok: #2e7d5b;
+  --warn: #b7791f;
+  --danger: #c0392b;
+  --font-ui: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
+}

@@ -1,0 +1,125 @@
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 28px 1fr 22px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.titlebar,
+.statusbar {
+  display: flex;
+  align-items: center;
+  border-color: var(--border);
+  background: var(--panel-header);
+  font-family: var(--font-ui);
+}
+
+.titlebar {
+  gap: 8px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.mark {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.subtitle {
+  color: var(--text-muted);
+}
+
+.workspace {
+  width: min(920px, calc(100% - 48px));
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 56px;
+  align-items: center;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font: 600 11px/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.workspace h1 {
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.lede {
+  max-width: 580px;
+  margin: 20px 0 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.milestones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.milestones li {
+  min-height: 44px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.milestones li:last-child {
+  border-bottom: 0;
+}
+
+.milestones li[data-status='active'] {
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--text);
+  background: var(--accent-soft);
+}
+
+.milestones span {
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+.milestones strong {
+  font-weight: 500;
+}
+
+.statusbar {
+  justify-content: space-between;
+  padding: 0 8px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font: 10px/1 var(--font-mono);
+}
+
+@media (max-width: 720px) {
+  .workspace {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 36px 0;
+  }
+
+  .statusbar span:last-child {
+    display: none;
+  }
+}
