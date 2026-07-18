@@ -1,4 +1,4 @@
-# Physics validation reports
+# Numerical validation reports
 
 M3 separates quick regression from the required long-horizon evidence:
 
@@ -15,3 +15,12 @@ Run these commands with the repository-pinned Node 24 and pnpm versions. The rep
 - The D4 low-momentum and softened close-encounter cases are repository-authored numerical edge fixtures; their definitions are versioned in `src/scenarios/reference.js`.
 
 The published figure-8 data use `G=1`, equal unit masses, and period `6.32591398`. Barycenter keeps the positions as AU, multiplies velocities by `√(4π²)=2π`, and divides the reference period by `2π` to preserve the same trajectory at the public AU·yr·M☉ boundary.
+
+## Analysis Alpha
+
+M4 fixes the rotating-frame, canonical CR3BP, zero-velocity grid, L1–L5, and Jacobi-conservation baseline.
+
+- `pnpm test:analysis` runs the DOM-free frame and CR3BP gates.
+- `pnpm report:analysis` writes deterministic `analysis-baseline.json` and `analysis-baseline.md` evidence.
+
+The canonical convention uses total mass 1, primary at `(-μ, 0)`, secondary at `(1-μ, 0)`, separation 1, and angular rate 1. Physical AU·yr·M☉ states cross the boundary through explicit length, time, and velocity scales.

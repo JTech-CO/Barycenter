@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "milestone": "M4",
+  "releaseMarker": "Analysis Alpha",
+  "runtime": "v24.14.0",
+  "canonicalConvention": "Total mass=1, primary at (-μ,0), secondary at (1-μ,0), angular rate=1.",
+  "massRatio": 0.01,
+  "lagrangePoints": {
+    "L1": {
+      "position": [
+        0.8480787129761018,
+        0,
+        0
+      ],
+      "residual": 7.399636459126668e-14,
+      "iterations": 45,
+      "bracket": [
+        -0.0099999999,
+        0.9899999999
+      ]
+    },
+    "L2": {
+      "position": [
+        1.1467650421238131,
+        0,
+        0
+      ],
+      "residual": 6.461498003318411e-14,
+      "iterations": 46,
+      "bracket": [
+        0.9900000001,
+        2.99
+      ]
+    },
+    "L3": {
+      "position": [
+        -1.004166611997499,
+        0,
+        0
+      ],
+      "residual": 1.3665284182007298e-15,
+      "iterations": 44,
+      "bracket": [
+        -2.01,
+        -0.0100000001
+      ]
+    },
+    "L4": {
+      "position": [
+        0.49,
+        0.8660254037844386,
+        0
+      ],
+      "residual": 3.399626517322856e-16,
+      "iterations": 0,
+      "bracket": null
+    },
+    "L5": {
+      "position": [
+        0.49,
+        -0.8660254037844386,
+        0
+      ],
+      "residual": 3.399626517322856e-16,
+      "iterations": 0,
+      "bracket": null
+    }
+  },
+  "zeroVelocityGrids": [
+    {
+      "width": 41,
+      "height": 33,
+      "bounds": {
+        "xMin": -1.5,
+        "xMax": 1.5,
+        "yMin": -1.2,
+        "yMax": 1.2,
+        "z": 0
+      },
+      "minimum": 0.0004116991805451775,
+      "maximum": 195.030102020202,
+      "finite": true
+    },
+    {
+      "width": 82,
+      "height": 66,
+      "bounds": {
+        "xMin": -2,
+        "xMax": 2,
+        "yMin": -1.5,
+        "yMax": 1.5,
+        "z": 0
+      },
+      "minimum": 0.00007034710153464019,
+      "maximum": 69.4083168388362,
+      "finite": true
+    }
+  ],
+  "experiments": [
+    {
+      "preset": {
+        "id": "cr3bp-l4-equilibrium",
+        "label": "L4 equilibrium verification",
+        "description": "A massless tracer initialized at the analytic triangular equilibrium.",
+        "mu": 0.01,
+        "dt": 0.00048828125,
+        "recommendedPeriods": 10,
+        "referenceJacobi": 2.9901,
+        "tolerances": {
+          "jacobiAbsolute": 1e-8,
+          "maximumRadius": 2,
+          "minimumPrimaryDistance": 0.05,
+          "recurrence": 0.00001
+        }
+      },
+      "result": {
+        "presetId": "cr3bp-l4-equilibrium",
+        "periods": 10,
+        "stepsPerPeriod": 2048,
+        "totalSteps": 20480,
+        "sampleCount": 321,
+        "maximumJacobiError": 4.440892098500626e-16,
+        "maximumRadius": 0.9950376877284598,
+        "minimumPrimaryDistance": 0.999999999866697,
+        "recurrenceError": 2.095098787307709e-9,
+        "finite": true
+      }
+    },
+    {
+      "preset": {
+        "id": "cr3bp-l4-tadpole",
+        "label": "L4 tadpole verification",
+        "description": "A small displacement from L4 producing bounded libration.",
+        "mu": 0.01,
+        "dt": 0.00048828125,
+        "recommendedPeriods": 20,
+        "referenceJacobi": 2.9902716146684893,
+        "tolerances": {
+          "jacobiAbsolute": 1e-8,
+          "maximumRadius": 2,
+          "minimumPrimaryDistance": 0.05,
+          "recurrence": 0.1
+        }
+      },
+      "result": {
+        "presetId": "cr3bp-l4-tadpole",
+        "periods": 20,
+        "stepsPerPeriod": 2048,
+        "totalSteps": 40960,
+        "sampleCount": 641,
+        "maximumJacobiError": 1.6107426503708666e-10,
+        "maximumRadius": 1.061023168955899,
+        "minimumPrimaryDistance": 0.7745228695010827,
+        "recurrenceError": 0.03813994242394772,
+        "finite": true
+      }
+    }
+  ],
+  "gates": [
+    {
+      "id": "l1-gradient",
+      "metric": "L1 effective-potential gradient residual",
+      "value": 7.399636459126668e-14,
+      "operator": "≤",
+      "limit": 1e-11,
+      "pass": true
+    },
+    {
+      "id": "l2-gradient",
+      "metric": "L2 effective-potential gradient residual",
+      "value": 6.461498003318411e-14,
+      "operator": "≤",
+      "limit": 1e-11,
+      "pass": true
+    },
+    {
+      "id": "l3-gradient",
+      "metric": "L3 effective-potential gradient residual",
+      "value": 1.3665284182007298e-15,
+      "operator": "≤",
+      "limit": 1e-11,
+      "pass": true
+    },
+    {
+      "id": "l4-gradient",
+      "metric": "L4 effective-potential gradient residual",
+      "value": 3.399626517322856e-16,
+      "operator": "≤",
+      "limit": 1e-11,
+      "pass": true
+    },
+    {
+      "id": "l5-gradient",
+      "metric": "L5 effective-potential gradient residual",
+      "value": 3.399626517322856e-16,
+      "operator": "≤",
+      "limit": 1e-11,
+      "pass": true
+    },
+    {
+      "id": "cr3bp-l4-equilibrium-jacobi",
+      "metric": "L4 equilibrium verification maximum Jacobi error",
+      "value": 4.440892098500626e-16,
+      "operator": "≤",
+      "limit": 1e-8,
+      "pass": true
+    },
+    {
+      "id": "cr3bp-l4-equilibrium-recurrence",
+      "metric": "L4 equilibrium verification recurrence/boundedness error",
+      "value": 2.095098787307709e-9,
+      "operator": "≤",
+      "limit": 0.00001,
+      "pass": true
+    },
+    {
+      "id": "cr3bp-l4-tadpole-jacobi",
+      "metric": "L4 tadpole verification maximum Jacobi error",
+      "value": 1.6107426503708666e-10,
+      "operator": "≤",
+      "limit": 1e-8,
+      "pass": true
+    },
+    {
+      "id": "cr3bp-l4-tadpole-recurrence",
+      "metric": "L4 tadpole verification recurrence/boundedness error",
+      "value": 0.03813994242394772,
+      "operator": "≤",
+      "limit": 0.1,
+      "pass": true
+    }
+  ],
+  "allPassed": true
+}

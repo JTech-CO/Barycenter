@@ -4,8 +4,8 @@ const milestones = [
   ['M1', '기반·계약', 'complete'],
   ['M2', '수치 코어', 'complete'],
   ['M3', '물리 검증', 'complete'],
-  ['M4', 'CR3BP 분석', 'active'],
-  ['M5', '해석 도구', 'pending'],
+  ['M4', 'CR3BP 분석', 'complete'],
+  ['M5', '해석 도구', 'active'],
 ];
 
 export default function App() {
@@ -40,7 +40,7 @@ export default function App() {
       <footer className={styles.statusbar}>
         <span>UNITS: AU · yr · M☉</span>
         <span>G = 4π²</span>
-        <span>CORE ALPHA · M4 NEXT</span>
+        <span>ANALYSIS ALPHA · M5 NEXT</span>
       </footer>
     </main>
   );
