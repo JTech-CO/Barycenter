@@ -24,3 +24,11 @@ M4 fixes the rotating-frame, canonical CR3BP, zero-velocity grid, L1–L5, and J
 - `pnpm report:analysis` writes deterministic `analysis-baseline.json` and `analysis-baseline.md` evidence.
 
 The canonical convention uses total mass 1, primary at `(-μ, 0)`, secondary at `(1-μ, 0)`, separation 1, and angular rate 1. Physical AU·yr·M☉ states cross the boundary through explicit length, time, and velocity scales.
+
+## Product Beta
+
+M5 evidence is recorded in `product-beta-qa.md`.
+
+- `pnpm verify` gates lint, strict checkJs, fast physics/UI integration tests, and the production build.
+- `pnpm test:physics:long` retains the Core Alpha long-horizon release evidence.
+- The report separates automated pass evidence from the visual-only in-app Browser audit that is currently blocked by the Windows workspace ACL helper.

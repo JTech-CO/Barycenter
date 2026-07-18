@@ -15,4 +15,22 @@
   --danger: #c0392b;
   --font-ui: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
+  --canvas-grid: #e8ebef;
+  --canvas-axis: #aeb6c0;
+  --canvas-text: #505b67;
+  --selection: #d97818;
+  --contour: #7763a5;
+  --series-1: #2c6fb3;
+  --series-2: #d97818;
+  --series-3: #2e7d5b;
+  --series-4: #8064a2;
+  --series-5: #aa4f69;
+  --warn-soft: rgb(183 121 31 / 10%);
+  --overlay: rgb(252 252 253 / 94%);
+  --focus-ring: #135fa9;
+  --console: #181c21;
+  --console-border: #303741;
+  --console-text: #dce1e8;
+  --console-muted: #8f9aa7;
+  --series-muted: #697480;
 }
