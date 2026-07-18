@@ -13,6 +13,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p jsconfig.json",
+    "test:core": "vitest run src/core",
     "test": "vitest",
     "test:run": "vitest run",
     "verify": "pnpm lint && pnpm typecheck && pnpm test:run && pnpm build"

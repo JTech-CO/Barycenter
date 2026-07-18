@@ -1,9 +1,9 @@
 import styles from './App.module.css';
 
 const milestones = [
-  ['M1', '기반·계약', 'active'],
-  ['M2', '수치 코어', 'pending'],
-  ['M3', '물리 검증', 'pending'],
+  ['M1', '기반·계약', 'complete'],
+  ['M2', '수치 코어', 'complete'],
+  ['M3', '물리 검증', 'active'],
   ['M4', 'CR3BP 분석', 'pending'],
   ['M5', '해석 도구', 'pending'],
 ];
@@ -40,7 +40,7 @@ export default function App() {
       <footer className={styles.statusbar}>
         <span>UNITS: AU · yr · M☉</span>
         <span>G = 4π²</span>
-        <span>CORE: READY FOR M2</span>
+        <span>CORE: M2 VERIFIED · M3 NEXT</span>
       </footer>
     </main>
   );

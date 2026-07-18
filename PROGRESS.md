@@ -1,32 +1,31 @@
 # Barycenter progress
 
 **Last updated**: 2026-07-19
-**Current milestone**: M2 — 결정론적 수치 코어 (ready)
-**Overall state**: M0–M1 complete; M2 implementation not started
+**Current milestone**: M3 — 물리 정확성·장기 보존 검증 (ready)
+**Overall state**: M0–M2 complete; M3 implementation not started
 
 ## Just completed
 
-- Completed M1 application scaffolding with React 19.2.7, Vite 7.3.6, Zustand 5.0.14, pnpm 11.9.0, and Node 24.14.0.
-- Added ESLint 10 flat configuration with enforced `src/core` framework/DOM boundaries.
-- Added strict JSDoc type checking, Vitest, production build, and aggregate `pnpm verify` scripts.
-- Added normalized units, allocation-controlled Vec3 utilities, unit tests, and a minimal analysis-frame shell.
-- Audited the technical whitepaper, design whitepaper, and the previous-agent-oriented harness.
-- Converted durable repository guidance to Codex's `AGENTS.md` convention.
-- Established the detailed M0–M7 implementation plan and release dependency path.
-- Restored rotating-frame, CR3BP, and Lagrange-point work as an explicit M4 gate.
-- Moved acceleration work behind measured performance evidence in M7; kept natural-language integration M6 optional.
+- Completed the deterministic Float64 SoA state contract with explicit massive/tracer roles, validation errors, cloning, and serialization.
+- Added the symmetric direct O(N²) force oracle, massless tracer target behavior, softening, and the matching softened potential.
+- Implemented leapfrog KDK and Yoshida4 production integrators plus an isolated RK4 comparison path.
+- Added robust elliptic Kepler conversion with explicit true/mean anomaly semantics and high-eccentricity fallback solving.
+- Added scale-aware energy, angular-momentum, momentum, and moving-barycenter diagnostics; fixed-body worlds are marked constrained.
+- Added transactional world stepping, reset, snapshots, deterministic replay, and safe-stop rollback with preserved error context.
+- Added a dedicated `pnpm test:core` gate. All 35 M2 tests and the full repository verification pass.
+- Updated the application milestone indicator to M2 verified / M3 next.
 
 ## Next work
 
-1. Execute M2-01/M2-02: define validated runtime SoA state and extend vector primitives.
-2. Execute M2-03/M2-04: implement direct gravity plus leapfrog, Yoshida4, and comparison RK4.
-3. Execute M2-05/M2-06: implement Kepler conversion and scale-aware diagnostics.
-4. Execute M2-07: implement transactional world stepping, reset, snapshot, and safe stop.
-5. Run the full M2 core gate and record results below.
+1. Add versioned reference fixtures for circular/eccentric binaries, a large mass-ratio system, figure-8, low-momentum symmetry, and softened close encounter.
+2. Build fast and long-horizon validation runners with signed error sampling and reproducible reports.
+3. Gate analytic period, 1,000-period leapfrog energy trend, angular momentum, moving COM, and dt convergence.
+4. Gate figure-8 recurrence for at least 100 periods and document fixture provenance/unit scaling.
+5. Record RK4 comparison evidence without making it a production integrator.
 
 ## Open questions
 
-These do not block M1–M3.
+These do not block M3–M5.
 
 - Which AI provider/model, if any, should back optional M6? The current technical whitepaper names Anthropic Fable 5; provider choice is deferred until M6 entry.
 - Should collision behavior remain "no merge" for v1, or should optional inelastic merge enter after the core release?
@@ -39,7 +38,8 @@ These do not block M1–M3.
 |---|---|---|
 | M0 | Pass | `AGENTS.md`, `Barycenter_마일스톤.md`, Codex-aligned harness, this handoff |
 | M1 | Pass | Node 24.14.0 + `pnpm verify`; 5 tests; core boundary negative lint gate; preview HTTP 200 |
-| M2–M7 | Not started | Waiting on dependencies |
+| M2 | Pass | Node 24.14.0 + `pnpm verify`; 35 core tests; force/potential parity; round-trip; convergence; deterministic replay; safe stop |
+| M3–M7 | Not started | Waiting on dependencies |
 
 ## Decision log
 
@@ -53,6 +53,9 @@ These do not block M1–M3.
 | 2026-07-19 | Use 3D runtime state and an octree for any Barnes–Hut path. | A 2D quadtree would not preserve force correctness for inclined 3D states. |
 | 2026-07-19 | Scope v1 Kepler-element input to elliptic orbits (`0 ≤ e < 1`). | The specified eccentric-anomaly solver applies to elliptic motion; unbound motion remains possible via Cartesian state input. |
 | 2026-07-19 | Pin M1 verification to Node 24.14.0, pnpm 11.9.0, Vite 7.3.6. | Vite 8.1.5/Rolldown repeatedly terminated natively on Windows under Node 25; the official Vite 7 path passed install, lint, strict checkJs, tests, build, and preview smoke. |
+| 2026-07-19 | Make body gravity roles explicit: massive bodies source and receive gravity; zero-mass tracers receive but never source it. | Prevents an ambiguous `mass === 0` convention from contaminating forces and conserved quantities. |
+| 2026-07-19 | Keep leapfrog/Yoshida4 as production fixed-step paths and RK4 as comparison only. | Preserves the long-horizon symplectic contract while retaining a validation baseline. |
+| 2026-07-19 | Commit world state only after an entire outer step succeeds. | Safe-stop can restore the last valid phase-space state and retain the numerical cause. |
 
 ## Blockers
 
