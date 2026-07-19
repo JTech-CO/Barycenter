@@ -89,6 +89,8 @@ Canvas 2D에는 XY 기준면을 투영합니다.
    pnpm preview
    ```
 
+   GitHub Pages 배포 주소는 <https://jtech-co.github.io/Barycenter/>입니다.
+
 ## 4. 폴더 구조 (Structure)
 
 ```text
@@ -106,7 +108,6 @@ Barycenter/
 │   └── validation/    # 물리·성능 fixture와 회귀 검증
 ├── packages/ai-proxy/ # 선택형 외부 AI 프록시
 ├── scripts/           # 검증·리포트·번들·배포 도구
-├── reports/           # 재현 가능한 물리·분석·성능 기준선
 ├── public/            # 정적 배포 헤더와 SPA fallback
 └── .github/workflows/ # 빠른 CI와 예약/수동 릴리스 검증
 ```
@@ -114,9 +115,8 @@ Barycenter/
 ## 5. 정보 (Info)
 
 - **Release status**: Product Beta / Core v1 release candidate
-- **Performance baseline**: 기준 장치에서 N=500 추정 p95 7.2769 ms, N=2000은 비실시간 범위
 - **Known limits**: Canvas 2D XY 투영, Barnes–Hut/GPU 미도입, 충돌 병합 미지원, 실제 브라우저/LCP 최종 확인 대기
-- **Documentation**: [기술 백서](./Barycenter_기술백서.md) · [마일스톤](./Barycenter_마일스톤.md) · [검증 보고서](./reports/README.md)
+- **Live site**: [jtech-co.github.io/Barycenter](https://jtech-co.github.io/Barycenter/)
 - **Repository**: [JTech-CO/Barycenter](https://github.com/JTech-CO/Barycenter)
 - **Contact**: [GitHub Issues](https://github.com/JTech-CO/Barycenter/issues)
 - **License**: 현재 별도 라이선스 파일이 지정되어 있지 않습니다.

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { extname, join, relative } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
@@ -100,6 +100,7 @@ const lines = [
 ].join('\n');
 
 if (process.argv.includes('--write')) {
+  mkdirSync(join(root, 'reports'), { recursive: true });
   writeFileSync(
     join(root, 'reports', 'bundle-baseline.json'),
     JSON.stringify(payload, null, 2) + '\n',

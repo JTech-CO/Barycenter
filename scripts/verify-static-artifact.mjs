@@ -2,6 +2,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = process.cwd();
+const deploymentBase = '/Barycenter/';
 const dist = join(root, 'dist');
 const required = ['index.html', '_headers', '_redirects'];
 const failures = [];
@@ -21,7 +22,11 @@ if (failures.length === 0) {
     failures.push('index.html must reference JavaScript and CSS assets.');
   }
   for (const reference of references) {
-    const file = reference.replace(/^\//, '');
+    if (!reference.startsWith(deploymentBase + 'assets/')) {
+      failures.push('Asset is outside the GitHub Pages base: ' + reference);
+      continue;
+    }
+    const file = reference.slice(deploymentBase.length);
     if (!existsSync(join(dist, file))) {
       failures.push('Referenced asset is missing: ' + reference);
     }

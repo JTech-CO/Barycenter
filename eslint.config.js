@@ -21,7 +21,7 @@ export default [
       'node_modules/**',
       'playwright-report/**',
       'test-results/**',
-      'reports/generated/**',
+      'reports/**',
     ],
   },
   js.configs.recommended,

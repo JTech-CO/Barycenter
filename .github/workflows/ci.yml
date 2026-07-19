@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out source
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6
@@ -26,7 +26,7 @@ jobs:
           version: 11.9.0
 
       - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24.14.0
           cache: pnpm
@@ -38,7 +38,7 @@ jobs:
         run: pnpm verify
 
       - name: Upload static artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: barycenter-static-${{ github.sha }}
           path: dist

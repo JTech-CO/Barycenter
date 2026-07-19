@@ -1,4 +1,4 @@
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import {
   arch,
   cpus,
@@ -386,6 +386,7 @@ const payload = {
 const report = markdown(results, environment, decision, generatedAt);
 
 if (process.argv.includes('--write')) {
+  mkdirSync(new URL('../reports/', import.meta.url), { recursive: true });
   writeFileSync(
     new URL('../reports/performance-baseline.json', import.meta.url),
     JSON.stringify(payload, null, 2) + '\n',
