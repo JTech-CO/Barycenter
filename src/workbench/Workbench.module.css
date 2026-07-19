@@ -843,6 +843,277 @@
   color: var(--danger);
 }
 
+.scenarioComposerBackdrop {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(20 32 48 / 28%);
+  backdrop-filter: blur(2px);
+}
+
+.scenarioComposer {
+  width: min(680px, 100%);
+  max-height: min(760px, calc(100vh - 48px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: var(--panel);
+  box-shadow: 0 18px 48px rgb(20 32 48 / 22%);
+}
+
+.scenarioComposer > header {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--panel-header);
+}
+
+.scenarioComposer > header > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scenarioComposer > header svg {
+  color: var(--accent);
+}
+
+.scenarioComposer h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.scenarioComposer > header span {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font: 8px/1 var(--font-mono);
+}
+
+.scenarioComposer > header button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.scenarioComposer > header button:hover {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.scenarioComposer form {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+  padding: 14px;
+}
+
+.scenarioComposer form > label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 9px;
+}
+
+.scenarioComposer textarea {
+  min-height: 92px;
+  resize: vertical;
+  padding: 9px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  outline: 0;
+  background: var(--canvas);
+  color: var(--text);
+  font: 11px/1.5 var(--font-ui);
+}
+
+.scenarioComposer textarea:focus {
+  border-color: var(--accent);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.scenarioComposerSource {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 9px;
+  padding: 8px 9px;
+  border: 1px solid var(--border);
+  background: var(--panel-header);
+}
+
+.scenarioComposerSource span,
+.scenarioComposerSource small {
+  color: var(--text-muted);
+  font-size: 8px;
+}
+
+.scenarioComposerSource strong {
+  color: var(--text);
+  font-size: 9px;
+}
+
+.scenarioComposerSource small {
+  grid-column: 2;
+}
+
+.scenarioComposerError {
+  display: flex;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.scenarioComposerError p {
+  margin: 3px 0 0;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.scenarioComposerReview {
+  border: 1px solid var(--border-strong);
+  background: var(--canvas);
+}
+
+.scenarioComposerReview > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 8px 9px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-header);
+}
+
+.scenarioComposerReview > header span {
+  color: var(--ok);
+  font: 8px/1 var(--font-mono);
+  text-transform: uppercase;
+}
+
+.scenarioComposerReview > header strong {
+  font-size: 10px;
+}
+
+.scenarioComposerReview dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.scenarioComposerReview dl > div {
+  padding: 7px 9px;
+  border-right: 1px solid var(--border);
+}
+
+.scenarioComposerReview dl > div:last-child {
+  border-right: 0;
+}
+
+.scenarioComposerReview dt {
+  color: var(--text-muted);
+  font-size: 8px;
+}
+
+.scenarioComposerReview dd {
+  margin: 3px 0 0;
+  font: 9px/1.2 var(--font-mono);
+}
+
+.scenarioComposerReview ul {
+  max-height: 150px;
+  margin: 0;
+  padding: 5px 9px;
+  overflow: auto;
+  list-style: none;
+}
+
+.scenarioComposerReview li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--border);
+  font-size: 9px;
+}
+
+.scenarioComposerReview li:last-child {
+  border-bottom: 0;
+}
+
+.scenarioComposerReview code {
+  color: var(--text-muted);
+  font: 8px/1.2 var(--font-mono);
+}
+
+.scenarioComposerReview > p {
+  margin: 0;
+  padding: 8px 9px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.scenarioComposer form > footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.scenarioComposer form > footer button {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  border: 1px solid var(--border-strong);
+  background: var(--panel-header);
+  color: var(--text);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.scenarioComposer form > footer button[data-primary] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+.scenarioComposer form > footer button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.scenarioComposerSpinner {
+  animation: scenario-composer-spin 0.8s linear infinite;
+}
+
+@keyframes scenario-composer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .statusbar {
   min-width: 0;
   display: flex;
@@ -1051,6 +1322,23 @@
     right: 8px;
     bottom: 64px;
     max-width: calc(100vw - 16px);
+  }
+
+  .scenarioComposerBackdrop {
+    align-items: end;
+    padding: 0;
+  }
+
+  .scenarioComposer {
+    width: 100%;
+    max-height: calc(100vh - 42px);
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+
+  .scenarioComposerReview dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

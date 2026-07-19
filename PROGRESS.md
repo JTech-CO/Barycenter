@@ -1,34 +1,32 @@
 # Barycenter progress
 
 **Last updated**: 2026-07-19
-**Current milestone**: M5 — 인터랙티브 해석 도구 (Product Beta)
-**Overall state**: M0–M5 implementation complete; Product Beta automated gate passed; in-app visual audit is environment-blocked
+**Current milestone**: M6 — 자연어 시나리오 (provider-neutral reference mode)
+**Overall state**: M0–M6 implementation complete; M6 gate passed without an external provider; M7 is next
 
 ## Just completed
 
-- Added an accumulator runtime that owns the deterministic world, bounded trails/diagnostics, playback, fixed stepping, reset points, editing, and CSV snapshots.
-- Added four validated presets plus a versioned, LZ-compressed, size- and compute-limited Scenario URL contract with deterministic restore.
-- Built the Canvas 2D orbit view with AU axes, camera pan/zoom/fit, selection, measurement, velocity vectors, trails, rotating frames, zero-velocity contours, and L1–L5 overlays.
-- Built the Product Beta desktop shell: title bar, ribbon, specification tree, Cartesian/Kepler property editor, conservation monitor, figure dock, console, and status bar.
-- Added responsive 1024 px and sub-768 px viewing shells, keyboard commands, focus gates, accessible labels, CSV export, and user-triggered WebM capture.
-- Added the representative preset→run→step→select→edit→reset→share→restore integration test and NumberField interaction gates.
-- Passed `pnpm verify`: zero lint warnings, strict checkJs, 18 test files/73 tests, and production build.
-- Re-ran the 3-test long-horizon physics suite and production preview HTTP 200 smoke.
-- Recorded the environment-blocked in-app visual audit and remaining viewport checklist in `reports/product-beta-qa.md`.
+- Added the provider-independent ScenarioDraft v1 JSON Schema, stable error envelope, strict field/unit/physical validation, and bounded prompt/response contracts.
+- Added a deterministic offline reference interpreter for binary, circumbinary planet, planetary, Figure-8, and L4 requests so static deployments retain the full request → review → apply path.
+- Added a separate dependency-free Node proxy package with origin/request/response limits, a hard timeout, server-only credential handling, and an isolated structured-provider adapter.
+- Added a Natural language composer that never mutates the runtime before explicit review/apply and leaves presets, manual editing, and playback usable after failures.
+- Added provider timeout/5xx/malformed/oversized response injection, invalid physical draft matrices, adapter fixtures, prompt/log privacy checks, and UI success/failure integration coverage.
+- Passed `pnpm verify`: zero lint findings, browser and proxy strict checkJs, 23 test files/97 tests, production build, and secret-boundary scan.
+- Confirmed proxy-free production preview HTTP 200 and recorded evidence in `reports/m6-natural-language.md`.
 
 ## Next work
 
-1. Complete the visual-only viewport checklist when the in-app browser can start without the Windows ACL failure.
-2. Decide whether to enter optional M6 natural-language scenarios or proceed directly to M7 profiling and release hardening.
-3. Select the M7 reference machine and supported browser matrix before setting performance budgets.
+1. Profile physics, rendering, diagnostics, and bounded buffers for M7 on a recorded local reference environment.
+2. Use the M7A evidence to decide whether the direct-force oracle needs a 3D Barnes–Hut path.
+3. Complete release/browser/deploy gates that are possible locally and retain the existing visual-browser ACL blocker explicitly.
 
 ## Open questions
 
 These do not block the Product Beta implementation.
 
-- Which AI provider/model, if any, should back optional M6? The current technical whitepaper names Anthropic Fable 5; provider choice is deferred until M6 entry.
+- Which paid AI provider/model, if any, should replace the M6 vendor-neutral adapter? No provider is required for the offline/static workflow.
 - Should collision behavior remain "no merge" for v1, or should optional inelastic merge enter after the core release?
-- Which reference machine and browser set will define the M7 performance budget?
+- Should the current local Node/browser environment serve as the initial M7 reference machine, pending later physical browser smoke on the blocked in-app Browser runtime?
 - Is a GPU force path a product requirement, or only a contingency if Barnes–Hut misses the measured target?
 
 ## Gate results
@@ -41,7 +39,8 @@ These do not block the Product Beta implementation.
 | M3 | Pass | 50 fast tests + 3 long tests; all-fixture conservation; 1,000-period energy trend; 100-period figure-8 recurrence; deterministic report |
 | M4 | Pass | 61 fast tests; 11 analysis gates; frame round-trip; L1–L5 residual; two bounded-Jacobi presets; deterministic Analysis Alpha report |
 | M5 | Automated pass; visual audit environment-blocked | 73 fast tests; 3 long tests; build; HTTP 200; workflow restore gate; `reports/product-beta-qa.md` |
-| M6–M7 | Not started | M6 optional; M7 awaits profiling targets |
+| M6 | Pass (provider-neutral reference mode) | 97 fast tests total; strict contract/failure isolation; secret scan; static preview HTTP 200; `reports/m6-natural-language.md` |
+| M7 | Not started | Awaits local profiling and release hardening |
 
 ## Decision log
 
@@ -70,6 +69,8 @@ These do not block the Product Beta implementation.
 | 2026-07-19 | Canonicalize signed zero and bound shared-scenario bodies, `dt`, substeps, trails, JSON, and hash lengths before runtime creation. | Shared URLs must reproduce byte-stably without enabling resource-exhaustion inputs. |
 | 2026-07-19 | Keep Canvas/WebM browser APIs in adapters outside `src/core`. | Preserves the framework- and DOM-free numerical oracle. |
 | 2026-07-19 | Mark the in-app visual audit environment-blocked after two browser-runtime ACL failures and retain a manual viewport checklist. | Automated product flow, numerical, build, and HTTP gates passed; the failure occurred before browser connection. |
+| 2026-07-19 | Implement M6 in provider-neutral reference mode and leave paid provider/model activation unconfigured. | The user authorized M6 implementation but did not authorize a vendor, budget, credential, or deployment; the static workflow and contract can still be completed without those assumptions. |
+| 2026-07-19 | Use a dependency-free `node:http` proxy package with an isolated structured-JSON adapter instead of binding the client to a vendor SDK or Fastify. | The milestone requires a separate minimal bounded proxy; avoiding an added runtime framework keeps the optional service small while preserving timeout, size, origin, credential, and adapter boundaries. |
 
 ## Blockers
 

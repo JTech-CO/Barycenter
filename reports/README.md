@@ -32,3 +32,11 @@ M5 evidence is recorded in `product-beta-qa.md`.
 - `pnpm verify` gates lint, strict checkJs, fast physics/UI integration tests, and the production build.
 - `pnpm test:physics:long` retains the Core Alpha long-horizon release evidence.
 - The report separates automated pass evidence from the visual-only in-app Browser audit that is currently blocked by the Windows workspace ACL helper.
+
+## Natural-language scenarios
+
+M6 evidence is recorded in `m6-natural-language.md`.
+
+- `pnpm test:ai` runs ScenarioDraft contracts, failure injection, proxy/adaptor fixtures, and request → review → apply UI integration.
+- `pnpm security:scan` checks tracked values plus the client source/build for credential leakage and server-only environment names.
+- `pnpm verify` includes both browser and proxy strict checkJs, all fast tests, production build, and the secret-boundary scan.

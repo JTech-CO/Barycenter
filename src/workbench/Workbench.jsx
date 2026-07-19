@@ -14,6 +14,7 @@ import {
   Save,
   Share2,
   SkipForward,
+  Sparkles,
   Square,
   Video,
   ZoomIn,
@@ -26,6 +27,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { ScenarioComposer } from '../ai/ScenarioComposer.jsx';
 import { GraphicsArea } from '../components/GraphicsArea.jsx';
 import { MiniPlot } from '../components/MiniPlot.jsx';
 import { NumberField } from '../components/NumberField.jsx';
@@ -598,6 +600,7 @@ function ConsolePanel() {
  *   onShare: () => void,
  *   onCsv: () => void,
  *   onRecord: () => void,
+ *   onCompose: () => void,
  *   recording: boolean,
  *   perform: (label: string, action: () => void) => void,
  * }} props
@@ -610,6 +613,7 @@ function Ribbon({
   onShare,
   onCsv,
   onRecord,
+  onCompose,
   recording,
   perform,
 }) {
@@ -678,6 +682,11 @@ function Ribbon({
                 ))}
               </select>
             </label>
+            <CommandButton
+              icon={<Sparkles size={18} />}
+              label="Natural language"
+              onClick={onCompose}
+            />
             <CommandButton icon={<Save size={18} />} label="Scenario" onClick={onSave} />
             <CommandButton icon={<Share2 size={18} />} label="Share URL" onClick={onShare} />
             <CommandButton icon={<Download size={18} />} label="CSV" onClick={onCsv} />
@@ -868,6 +877,7 @@ function Workbench({ initialWarning }) {
   const selectBody = useBaryStore((state) => state.selectBody);
   const notice = useBaryStore((state) => state.notice);
   const recording = useBaryStore((state) => state.recording);
+  const [composerOpen, setComposerOpen] = useState(false);
   const addConsoleLog = useBaryStore((state) => state.addConsoleLog);
   const setNotice = useBaryStore((state) => state.setNotice);
   const setRecording = useBaryStore((state) => state.setRecording);
@@ -1040,6 +1050,24 @@ function Workbench({ initialWarning }) {
     });
   };
 
+  /** @param {import('../ai/contracts.js').ScenarioDraft} draft @param {'local-reference' | 'proxy'} source */
+  const applyScenarioDraft = (draft, source) => {
+    perform(
+      'Applied reviewed natural-language draft from ' +
+        (source === 'proxy' ? 'configured proxy' : 'offline reference'),
+      () => {
+        runtime.loadScenario(draft.scenario);
+        window.history.replaceState(
+          null,
+          '',
+          window.location.pathname + window.location.search,
+        );
+        requestCamera('fit');
+        setComposerOpen(false);
+      },
+    );
+  };
+
   return (
     <div className={styles.appShell}>
       <header className={styles.titlebar}>
@@ -1074,6 +1102,7 @@ function Workbench({ initialWarning }) {
         onShare={shareScenario}
         onCsv={exportCsv}
         onRecord={toggleRecording}
+        onCompose={() => setComposerOpen(true)}
         recording={recording}
         perform={perform}
       />
@@ -1101,6 +1130,14 @@ function Workbench({ initialWarning }) {
       </div>
 
       <ConsolePanel />
+
+      {composerOpen ? (
+        <ScenarioComposer
+          onApply={applyScenarioDraft}
+          onClose={() => setComposerOpen(false)}
+          onEvent={addConsoleLog}
+        />
+      ) : null}
 
       <footer className={styles.statusbar}>
         <span>
