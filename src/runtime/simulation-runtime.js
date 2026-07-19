@@ -8,7 +8,13 @@ import {
   stepWorld,
 } from '../core/world.js';
 import { validateScenario } from '../scenarios/schema.js';
-import { DiagnosticsRingBuffer, TrailRingBuffer } from './ring-buffer.js';
+import {
+  DiagnosticsRingBuffer,
+  TrailRingBuffer,
+  estimateDiagnosticsStorageBytes,
+  estimateTrailStorageBytes,
+  resolveTrailCapacity,
+} from './ring-buffer.js';
 
 /** @typedef {import('../scenarios/schema.js').Scenario} Scenario */
 /** @typedef {ReturnType<SimulationRuntime['createSnapshot']>} RuntimeSnapshot */
@@ -44,9 +50,13 @@ export class SimulationRuntime {
     this.revision = 0;
     this.scenario = cloneScenario(validateScenario(scenario));
     this.world = createWorld(this.scenario.bodies, this.scenario.config);
+    this.trailCapacity = resolveTrailCapacity(
+      this.scenario.config.rendering.trailLength,
+      this.world.state.count,
+    );
     this.trails = new TrailRingBuffer(
       this.world.state.ids,
-      this.scenario.config.rendering.trailLength,
+      this.trailCapacity,
     );
     this.diagnosticsSeries = new DiagnosticsRingBuffer(
       Math.max(256, this.scenario.config.rendering.trailLength),
@@ -98,6 +108,23 @@ export class SimulationRuntime {
       trails: this.trails.snapshot(),
       lastError: this.world.lastError,
       accumulator: this.accumulator,
+      limits: {
+        trails: {
+          requestedPerBody: this.scenario.config.rendering.trailLength,
+          effectivePerBody: this.trailCapacity,
+          totalPointCapacity: this.world.state.count * this.trailCapacity,
+          storageBytes: estimateTrailStorageBytes(
+            this.world.state.count,
+            this.trailCapacity,
+          ),
+        },
+        diagnostics: {
+          capacity: this.diagnosticsSeries.capacity,
+          storageBytes: estimateDiagnosticsStorageBytes(
+            this.diagnosticsSeries.capacity,
+          ),
+        },
+      },
     };
   }
 
@@ -109,9 +136,13 @@ export class SimulationRuntime {
   loadScenario(scenario, notify = true) {
     this.scenario = cloneScenario(validateScenario(scenario));
     this.world = createWorld(this.scenario.bodies, this.scenario.config);
+    this.trailCapacity = resolveTrailCapacity(
+      this.scenario.config.rendering.trailLength,
+      this.world.state.count,
+    );
     this.trails = new TrailRingBuffer(
       this.world.state.ids,
-      this.scenario.config.rendering.trailLength,
+      this.trailCapacity,
     );
     this.diagnosticsSeries = new DiagnosticsRingBuffer(
       Math.max(256, this.scenario.config.rendering.trailLength),

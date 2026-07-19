@@ -544,6 +544,20 @@
   cursor: grabbing;
 }
 
+.canvasFallback {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(420px, calc(100% - 32px));
+  padding: 14px 16px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--warn);
+  background: var(--overlay);
+  color: var(--text);
+  font-size: 10px;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .canvasHud {
   position: absolute;
   top: 9px;

@@ -1,24 +1,25 @@
 # Barycenter progress
 
 **Last updated**: 2026-07-19
-**Current milestone**: M6 — 자연어 시나리오 (provider-neutral reference mode)
-**Overall state**: M0–M6 implementation complete; M6 gate passed without an external provider; M7 is next
+**Current milestone**: M7 — 성능·호환성·출시
+**Overall state**: M0–M7 implementation complete; automated release gates pass; Core v1 label is withheld pending physical browser/LCP evidence
 
 ## Just completed
 
-- Added the provider-independent ScenarioDraft v1 JSON Schema, stable error envelope, strict field/unit/physical validation, and bounded prompt/response contracts.
-- Added a deterministic offline reference interpreter for binary, circumbinary planet, planetary, Figure-8, and L4 requests so static deployments retain the full request → review → apply path.
-- Added a separate dependency-free Node proxy package with origin/request/response limits, a hard timeout, server-only credential handling, and an isolated structured-provider adapter.
-- Added a Natural language composer that never mutates the runtime before explicit review/apply and leaves presets, manual editing, and playback usable after failures.
-- Added provider timeout/5xx/malformed/oversized response injection, invalid physical draft matrices, adapter fixtures, prompt/log privacy checks, and UI success/failure integration coverage.
-- Passed `pnpm verify`: zero lint findings, browser and proxy strict checkJs, 23 test files/97 tests, production build, and secret-boundary scan.
-- Confirmed proxy-free production preview HTTP 200 and recorded evidence in `reports/m6-natural-language.md`.
+- Added deterministic N=100/500/2000 profiling that separates direct force, leapfrog, diagnostics, full safe step, body/trail snapshots, trail append, and Canvas command dispatch.
+- Measured N=500 at 7.2769 ms estimated p95 / 137.42 fps and N=2000 at 67.1555 ms / 14.89 fps on the recorded MSI reference device in High performance mode.
+- Retained the direct O(N²) oracle and deferred Barnes-Hut/Worker: hundreds-body Core v1 target passes; N=2000 is explicitly non-realtime and the future acceleration trigger.
+- Capped trail history at 32768 total 3D points, reported exact typed-array memory bounds, batched each body trail into one stroke, and removed non-rotating per-point transform allocation.
+- Added browser LCP/long-task observation, Canvas-unavailable CPU fallback, CSV/WebM adapter gates, bundle budgets, immutable cache/SPA fallback policy, and static artifact checks.
+- Added fast and scheduled/manual GitHub Actions workflows without pushing them, plus `pnpm release:verify` for long physics, analysis, and benchmark gates.
+- Passed 28 files/110 fast tests, 3 long physics tests, 11 analysis tests, production build, bundle/deploy/secret checks, performance assertions, and root/direct-entry preview HTTP 200.
+- Recorded the remaining physical-browser/LCP blocker in `reports/browser-smoke-matrix.md` and withheld the Core v1 label in `reports/core-v1-release-candidate.md`.
 
 ## Next work
 
-1. Profile physics, rendering, diagnostics, and bounded buffers for M7 on a recorded local reference environment.
-2. Use the M7A evidence to decide whether the direct-force oracle needs a 3D Barnes–Hut path.
-3. Complete release/browser/deploy gates that are possible locally and retain the existing visual-browser ACL blocker explicitly.
+1. Run the documented physical Chrome/Edge/Firefox/Safari matrix on browser runners that can start successfully.
+2. Record clean-load final LCP at or below 2500 ms and complete WebM codec confirmation.
+3. If those two physical gates pass, change the product label from Product Beta to Core v1 in a dedicated release commit.
 
 ## Open questions
 
@@ -26,7 +27,6 @@ These do not block the Product Beta implementation.
 
 - Which paid AI provider/model, if any, should replace the M6 vendor-neutral adapter? No provider is required for the offline/static workflow.
 - Should collision behavior remain "no merge" for v1, or should optional inelastic merge enter after the core release?
-- Should the current local Node/browser environment serve as the initial M7 reference machine, pending later physical browser smoke on the blocked in-app Browser runtime?
 - Is a GPU force path a product requirement, or only a contingency if Barnes–Hut misses the measured target?
 
 ## Gate results
@@ -40,7 +40,7 @@ These do not block the Product Beta implementation.
 | M4 | Pass | 61 fast tests; 11 analysis gates; frame round-trip; L1–L5 residual; two bounded-Jacobi presets; deterministic Analysis Alpha report |
 | M5 | Automated pass; visual audit environment-blocked | 73 fast tests; 3 long tests; build; HTTP 200; workflow restore gate; `reports/product-beta-qa.md` |
 | M6 | Pass (provider-neutral reference mode) | 97 fast tests total; strict contract/failure isolation; secret scan; static preview HTTP 200; `reports/m6-natural-language.md` |
-| M7 | Not started | Awaits local profiling and release hardening |
+| M7 | Automated pass; physical browser/LCP blocked | 110 fast + 3 long + 11 analysis tests; N=500 target pass; bundle/deploy gates pass; `reports/core-v1-release-candidate.md` |
 
 ## Decision log
 
@@ -71,7 +71,11 @@ These do not block the Product Beta implementation.
 | 2026-07-19 | Mark the in-app visual audit environment-blocked after two browser-runtime ACL failures and retain a manual viewport checklist. | Automated product flow, numerical, build, and HTTP gates passed; the failure occurred before browser connection. |
 | 2026-07-19 | Implement M6 in provider-neutral reference mode and leave paid provider/model activation unconfigured. | The user authorized M6 implementation but did not authorize a vendor, budget, credential, or deployment; the static workflow and contract can still be completed without those assumptions. |
 | 2026-07-19 | Use a dependency-free `node:http` proxy package with an isolated structured-JSON adapter instead of binding the client to a vendor SDK or Fastify. | The milestone requires a separate minimal bounded proxy; avoiding an added runtime framework keeps the optional service small while preserving timeout, size, origin, credential, and adapter boundaries. |
+| 2026-07-19 | Use the MSI Stealth 15 A13VF, i7-13620H, 64 GiB, Windows High performance plan, and 1440×900 dispatch viewport as the initial M7 reference environment. | It is the reproducible local device available for this run; installed Chrome/Edge versions and the lack of a physical automation connection are recorded separately. |
+| 2026-07-19 | Bound trail history to 32768 total 3D points and batch one Canvas path per body. | Keeps measured trail storage near 0.8 MB and render command count bounded instead of scaling requested per-body history without a global cap. |
+| 2026-07-19 | Retain direct O(N²) forces and do not add Barnes-Hut or a Worker in Core v1. | N=500 meets the 16.67 ms JavaScript frame budget; N=2000 is non-realtime and is documented as the future acceleration trigger, avoiding unneeded parity risk now. |
+| 2026-07-19 | Withhold the Core v1 label despite green local release automation. | Physical supported-browser smoke and final LCP cannot be measured while the browser sandbox fails before startup; bundle size and jsdom are not substitutes for paint evidence. |
 
 ## Blockers
 
-In-app Browser automation cannot start in this Unicode Windows workspace because its sandbox helper fails while applying deny-read ACLs. This blocks visual-only M5 viewport inspection, not build or runtime execution.
+In-app Browser automation cannot start in this Unicode Windows workspace because its sandbox helper fails while applying deny-read ACLs. This blocks the physical M5/M7 browser matrix and final LCP measurement, not build, numerical runtime, semantic smoke, benchmark, or static preview execution.

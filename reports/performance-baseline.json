@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-19T07:51:53.554Z",
+  "command": "pnpm benchmark",
+  "frameBudgetMs": 16.666667,
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "win32 10.0.26200 x64",
+    "cpu": "13th Gen Intel(R) Core(TM) i7-13620H",
+    "logicalCpuCount": 16,
+    "totalMemoryGiB": 63.708145,
+    "device": "MSI Stealth 15 A13VF; Intel Core i7-13620H; 64 GiB",
+    "browser": "Chrome 150.0.7871.125 and Edge 150.0.4078.83 installed; Canvas dispatch measured in Node",
+    "powerMode": "Windows High performance",
+    "viewport": "1440x900 @ 1x benchmark viewport"
+  },
+  "results": [
+    {
+      "bodyCount": 100,
+      "fixture": {
+        "distribution": "seeded uniform 3D sphere",
+        "seed": "0x5eed1234",
+        "totalMassSolar": 1,
+        "radiusAu": 10,
+        "softeningAu": 0.001,
+        "dtYr": 1e-7
+      },
+      "timings": {
+        "forceOracle": {
+          "samples": 24,
+          "minMs": 0.0722,
+          "p50Ms": 0.099,
+          "p95Ms": 0.1941,
+          "maxMs": 0.2953
+        },
+        "physicsLeapfrog": {
+          "samples": 24,
+          "minMs": 0.1375,
+          "p50Ms": 0.1629,
+          "p95Ms": 0.2733,
+          "maxMs": 0.5313
+        },
+        "diagnostics": {
+          "samples": 24,
+          "minMs": 0.0457,
+          "p50Ms": 0.1036,
+          "p95Ms": 0.1987,
+          "maxMs": 0.2321
+        },
+        "bodySnapshot": {
+          "samples": 24,
+          "minMs": 0.0701,
+          "p50Ms": 0.1004,
+          "p95Ms": 0.1844,
+          "maxMs": 0.2616
+        },
+        "trailAppend": {
+          "samples": 24,
+          "minMs": 0.0068,
+          "p50Ms": 0.0074,
+          "p95Ms": 0.0095,
+          "maxMs": 0.028
+        },
+        "trailSnapshot": {
+          "samples": 24,
+          "minMs": 0.2981,
+          "p50Ms": 0.3261,
+          "p95Ms": 0.4788,
+          "maxMs": 0.6944
+        },
+        "renderAdapter": {
+          "samples": 24,
+          "minMs": 0.3939,
+          "p50Ms": 0.6742,
+          "p95Ms": 0.9858,
+          "maxMs": 1.3914
+        },
+        "runtimeStep": {
+          "samples": 24,
+          "minMs": 0.1175,
+          "p50Ms": 0.1272,
+          "p95Ms": 0.2119,
+          "maxMs": 0.2371
+        },
+        "estimatedFrameP95Ms": 1.8704,
+        "estimatedFps": 534.644996,
+        "meets60FpsGoal": true,
+        "longTask": false
+      },
+      "history": {
+        "requestedTrailPerBody": 768,
+        "effectiveTrailPerBody": 327,
+        "totalTrailPointCapacity": 32700,
+        "stateStorageBytes": 7000,
+        "trailStorageBytes": 785200,
+        "trailSnapshotBytes": 784800,
+        "diagnosticsStorageBytes": 36864
+      },
+      "renderDispatch": {
+        "lineSegmentsPerSample": 32614,
+        "strokesPerSample": 114
+      }
+    },
+    {
+      "bodyCount": 500,
+      "fixture": {
+        "distribution": "seeded uniform 3D sphere",
+        "seed": "0x5eed1234",
+        "totalMassSolar": 1,
+        "radiusAu": 10,
+        "softeningAu": 0.001,
+        "dtYr": 1e-7
+      },
+      "timings": {
+        "forceOracle": {
+          "samples": 12,
+          "minMs": 1.0355,
+          "p50Ms": 1.1744,
+          "p95Ms": 1.3524,
+          "maxMs": 1.3524
+        },
+        "physicsLeapfrog": {
+          "samples": 12,
+          "minMs": 2.1756,
+          "p50Ms": 2.3847,
+          "p95Ms": 2.7286,
+          "maxMs": 2.7286
+        },
+        "diagnostics": {
+          "samples": 12,
+          "minMs": 0.4058,
+          "p50Ms": 0.4644,
+          "p95Ms": 0.9053,
+          "maxMs": 0.9053
+        },
+        "bodySnapshot": {
+          "samples": 12,
+          "minMs": 0.3007,
+          "p50Ms": 0.3299,
+          "p95Ms": 0.6454,
+          "maxMs": 0.6454
+        },
+        "trailAppend": {
+          "samples": 12,
+          "minMs": 0.0023,
+          "p50Ms": 0.0024,
+          "p95Ms": 0.003,
+          "maxMs": 0.003
+        },
+        "trailSnapshot": {
+          "samples": 12,
+          "minMs": 0.2398,
+          "p50Ms": 0.3518,
+          "p95Ms": 0.5874,
+          "maxMs": 0.5874
+        },
+        "renderAdapter": {
+          "samples": 12,
+          "minMs": 0.9836,
+          "p50Ms": 1.0715,
+          "p95Ms": 1.6594,
+          "maxMs": 1.6594
+        },
+        "runtimeStep": {
+          "samples": 12,
+          "minMs": 2.8502,
+          "p50Ms": 3.1338,
+          "p95Ms": 4.3817,
+          "maxMs": 4.3817
+        },
+        "estimatedFrameP95Ms": 7.2769,
+        "estimatedFps": 137.421155,
+        "meets60FpsGoal": true,
+        "longTask": false
+      },
+      "history": {
+        "requestedTrailPerBody": 768,
+        "effectiveTrailPerBody": 65,
+        "totalTrailPointCapacity": 32500,
+        "stateStorageBytes": 35000,
+        "trailStorageBytes": 782000,
+        "trailSnapshotBytes": 780000,
+        "diagnosticsStorageBytes": 36864
+      },
+      "renderDispatch": {
+        "lineSegmentsPerSample": 32014,
+        "strokesPerSample": 514
+      }
+    },
+    {
+      "bodyCount": 2000,
+      "fixture": {
+        "distribution": "seeded uniform 3D sphere",
+        "seed": "0x5eed1234",
+        "totalMassSolar": 1,
+        "radiusAu": 10,
+        "softeningAu": 0.001,
+        "dtYr": 1e-7
+      },
+      "timings": {
+        "forceOracle": {
+          "samples": 5,
+          "minMs": 18.3198,
+          "p50Ms": 18.8412,
+          "p95Ms": 24.5166,
+          "maxMs": 24.5166
+        },
+        "physicsLeapfrog": {
+          "samples": 5,
+          "minMs": 39.49,
+          "p50Ms": 40.5986,
+          "p95Ms": 41.5163,
+          "maxMs": 41.5163
+        },
+        "diagnostics": {
+          "samples": 5,
+          "minMs": 6.7322,
+          "p50Ms": 6.9599,
+          "p95Ms": 8.5468,
+          "maxMs": 8.5468
+        },
+        "bodySnapshot": {
+          "samples": 5,
+          "minMs": 1.4075,
+          "p50Ms": 1.7127,
+          "p95Ms": 2.0585,
+          "maxMs": 2.0585
+        },
+        "trailAppend": {
+          "samples": 5,
+          "minMs": 0.0148,
+          "p50Ms": 0.0156,
+          "p95Ms": 0.0174,
+          "maxMs": 0.0174
+        },
+        "trailSnapshot": {
+          "samples": 5,
+          "minMs": 0.7151,
+          "p50Ms": 1.2696,
+          "p95Ms": 1.4905,
+          "maxMs": 1.4905
+        },
+        "renderAdapter": {
+          "samples": 5,
+          "minMs": 1.3721,
+          "p50Ms": 1.889,
+          "p95Ms": 5.6947,
+          "maxMs": 5.6947
+        },
+        "runtimeStep": {
+          "samples": 5,
+          "minMs": 45.7013,
+          "p50Ms": 50.1131,
+          "p95Ms": 57.8944,
+          "maxMs": 57.8944
+        },
+        "estimatedFrameP95Ms": 67.1555,
+        "estimatedFps": 14.890813,
+        "meets60FpsGoal": false,
+        "longTask": true
+      },
+      "history": {
+        "requestedTrailPerBody": 768,
+        "effectiveTrailPerBody": 16,
+        "totalTrailPointCapacity": 32000,
+        "stateStorageBytes": 140000,
+        "trailStorageBytes": 776000,
+        "trailSnapshotBytes": 768000,
+        "diagnosticsStorageBytes": 36864
+      },
+      "renderDispatch": {
+        "lineSegmentsPerSample": 30014,
+        "strokesPerSample": 2014
+      }
+    }
+  ],
+  "accelerationDecision": {
+    "directOracleRetained": true,
+    "barnesHutIntroduced": false,
+    "workerIntroduced": false,
+    "coreV1Target": "hundreds of bodies at a 60 fps frame budget",
+    "targetResult": "N=500 estimated p95 frame 7.2769 ms (137.421155 fps)",
+    "highDensityResult": "N=2000 estimated p95 frame 67.1555 ms (14.890813 fps)",
+    "rationale": "Direct CPU summation meets the Core v1 hundreds-body target on the reference device. Barnes-Hut parity risk is deferred; N=2000 is documented as non-realtime and is the trigger for a future 3D octree path."
+  },
+  "assertions": {
+    "passed": true,
+    "failures": []
+  }
+}

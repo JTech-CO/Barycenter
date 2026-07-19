@@ -40,3 +40,14 @@ M6 evidence is recorded in `m6-natural-language.md`.
 - `pnpm test:ai` runs ScenarioDraft contracts, failure injection, proxy/adaptor fixtures, and request → review → apply UI integration.
 - `pnpm security:scan` checks tracked values plus the client source/build for credential leakage and server-only environment names.
 - `pnpm verify` includes both browser and proxy strict checkJs, all fast tests, production build, and the secret-boundary scan.
+
+## Core v1 release candidate
+
+M7 evidence is split by concern:
+
+- `performance-baseline.json` and `performance-baseline.md` record N=100/500/2000 force, physics, diagnostics, snapshot, trail, render-dispatch, and bounded-memory measurements.
+- `bundle-baseline.json` and `bundle-baseline.md` record hashed production asset sizes and release budgets.
+- `browser-smoke-matrix.md` separates automated semantic coverage from the environment-blocked physical browser matrix.
+- `core-v1-release-candidate.md` maps every M7 completion gate and explains why the Core v1 label is withheld.
+
+Use `pnpm benchmark` for the non-writing performance assertion, `pnpm report:performance` and `pnpm report:bundle` to refresh tracked reference evidence, and `pnpm release:verify` for the complete local release suite.

@@ -19,12 +19,18 @@
     "report:physics": "node scripts/generate-physics-report.mjs",
     "test:analysis": "vitest run src/core/frames.test.js src/core/cr3bp.test.js src/validation/cr3bp.test.js",
     "report:analysis": "node scripts/generate-analysis-report.mjs",
+    "benchmark": "node scripts/run-performance-benchmark.mjs --assert",
+    "report:performance": "node scripts/run-performance-benchmark.mjs --assert --write",
+    "bundle:check": "node scripts/analyze-build.mjs --assert",
+    "report:bundle": "node scripts/analyze-build.mjs --assert --write",
+    "deploy:check": "node scripts/verify-static-artifact.mjs",
     "test:ai": "vitest run src/ai packages/ai-proxy",
     "ai:proxy": "node packages/ai-proxy/src/server.mjs",
     "security:scan": "node scripts/check-secret-boundaries.mjs",
     "test": "vitest",
     "test:run": "vitest run",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test:run && pnpm build && pnpm security:scan"
+    "verify": "pnpm lint && pnpm typecheck && pnpm test:run && pnpm build && pnpm bundle:check && pnpm deploy:check && pnpm security:scan",
+    "release:verify": "pnpm verify && pnpm test:physics:long && pnpm test:analysis && pnpm benchmark"
   },
   "dependencies": {
     "lucide-react": "^1.25.0",

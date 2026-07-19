@@ -97,14 +97,20 @@ export function projectSnapshot(snapshot) {
   const projectedTrails = snapshot.trails.map((trail) => {
     const points = new Float64Array(trail.points.length);
     for (let index = 0; index < trail.points.length; index += 3) {
-      const transformed = transformPosition([
-        trail.points[index],
-        trail.points[index + 1],
-        trail.points[index + 2],
-      ]);
-      points[index] = transformed[0];
-      points[index + 1] = transformed[1];
-      points[index + 2] = transformed[2];
+      if (rotatingFrame) {
+        const transformed = transformPosition([
+          trail.points[index],
+          trail.points[index + 1],
+          trail.points[index + 2],
+        ]);
+        points[index] = transformed[0];
+        points[index + 1] = transformed[1];
+        points[index + 2] = transformed[2];
+      } else {
+        points[index] = trail.points[index] - origin[0];
+        points[index + 1] = trail.points[index + 1] - origin[1];
+        points[index + 2] = trail.points[index + 2] - origin[2];
+      }
     }
     return { id: trail.id, points };
   });
@@ -300,14 +306,17 @@ export function drawOrbitScene(context, snapshot, camera, options) {
     if (trail.points.length < 6) continue;
     context.strokeStyle = colors.series[trailIndex % colors.series.length];
     context.lineWidth = 1.25;
+    context.globalAlpha = 0.58;
+    context.beginPath();
+    const first = worldToScreen(
+      camera,
+      trail.points[0],
+      trail.points[1],
+      width,
+      height,
+    );
+    context.moveTo(first.x, first.y);
     for (let index = 3; index < trail.points.length; index += 3) {
-      const previous = worldToScreen(
-        camera,
-        trail.points[index - 3],
-        trail.points[index - 2],
-        width,
-        height,
-      );
       const current = worldToScreen(
         camera,
         trail.points[index],
@@ -315,12 +324,9 @@ export function drawOrbitScene(context, snapshot, camera, options) {
         width,
         height,
       );
-      context.globalAlpha = 0.16 + 0.72 * (index / trail.points.length);
-      context.beginPath();
-      context.moveTo(previous.x, previous.y);
       context.lineTo(current.x, current.y);
-      context.stroke();
     }
+    context.stroke();
   }
   context.globalAlpha = 1;
   const hitTargets = [];

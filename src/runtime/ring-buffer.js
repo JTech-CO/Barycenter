@@ -2,6 +2,47 @@ import { ValidationError } from '../core/errors.js';
 
 /** @typedef {ReturnType<typeof import('../core/diagnostics.js').measureDiagnostics>} DiagnosticsMeasurement */
 
+export const MAX_TOTAL_TRAIL_POINTS = 32_768;
+
+/**
+ * Keeps trail allocation and draw work bounded across body counts while
+ * preserving the requested history for small systems.
+ *
+ * @param {number} requestedPerBody
+ * @param {number} bodyCount
+ * @param {number} [maximumTotalPoints]
+ */
+export function resolveTrailCapacity(
+  requestedPerBody,
+  bodyCount,
+  maximumTotalPoints = MAX_TOTAL_TRAIL_POINTS,
+) {
+  if (!Number.isInteger(requestedPerBody) || requestedPerBody < 2) {
+    throw new ValidationError('Requested trail capacity must be an integer ≥ 2.');
+  }
+  if (!Number.isInteger(bodyCount) || bodyCount < 1) {
+    throw new ValidationError('Trail body count must be a positive integer.');
+  }
+  if (!Number.isInteger(maximumTotalPoints) || maximumTotalPoints < 2) {
+    throw new ValidationError('Total trail point budget must be an integer ≥ 2.');
+  }
+  return Math.max(
+    2,
+    Math.min(requestedPerBody, Math.floor(maximumTotalPoints / bodyCount)),
+  );
+}
+
+/** @param {number} bodyCount @param {number} capacity */
+export function estimateTrailStorageBytes(bodyCount, capacity) {
+  return bodyCount * capacity * 3 * Float64Array.BYTES_PER_ELEMENT +
+    bodyCount * Int32Array.BYTES_PER_ELEMENT;
+}
+
+/** @param {number} capacity */
+export function estimateDiagnosticsStorageBytes(capacity) {
+  return capacity * 6 * Float64Array.BYTES_PER_ELEMENT;
+}
+
 /** Fixed-capacity synchronized 3D trails for a deterministic body order. */
 export class TrailRingBuffer {
   /** @param {Int32Array} ids @param {number} capacity */

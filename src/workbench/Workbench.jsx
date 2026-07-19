@@ -37,6 +37,7 @@ import {
   startCanvasWebmRecording,
 } from '../export/files.js';
 import { RuntimeProvider } from '../runtime/RuntimeContext.jsx';
+import { observeRuntimePerformance } from '../runtime/performance-monitor.js';
 import { useRuntime, useRuntimeSnapshot } from '../runtime/hooks.js';
 import { SimulationRuntime } from '../runtime/simulation-runtime.js';
 import {
@@ -902,6 +903,28 @@ function Workbench({ initialWarning }) {
       }
     },
     [addConsoleLog, setNotice],
+  );
+
+  useEffect(
+    () =>
+      observeRuntimePerformance((metric) => {
+        if (metric.name === 'lcp') {
+          addConsoleLog(
+            metric.valueMs <= 2_500 ? 'info' : 'warning',
+            'LCP candidate ' + metric.valueMs.toFixed(1) + ' ms',
+          );
+        } else {
+          addConsoleLog(
+            'warning',
+            'Long task ' +
+              metric.valueMs.toFixed(1) +
+              ' ms at ' +
+              metric.startTimeMs.toFixed(1) +
+              ' ms',
+          );
+        }
+      }),
+    [addConsoleLog],
   );
 
   useEffect(() => {

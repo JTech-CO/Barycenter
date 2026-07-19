@@ -45,6 +45,7 @@ export function GraphicsArea({ onCanvasReady }) {
   );
   const [size, setSize] = useState({ width: 0, height: 0, dpr: 1 });
   const [cameraRevision, setCameraRevision] = useState(0);
+  const [canvasAvailable, setCanvasAvailable] = useState(true);
 
   useEffect(() => {
     if (!onCanvasReady) return undefined;
@@ -123,7 +124,11 @@ export function GraphicsArea({ onCanvasReady }) {
     canvas.width = Math.round(size.width * size.dpr);
     canvas.height = Math.round(size.height * size.dpr);
     const context = canvas.getContext('2d');
-    if (!context) return;
+    if (!context) {
+      setCanvasAvailable(false);
+      return;
+    }
+    setCanvasAvailable(true);
     context.setTransform(size.dpr, 0, 0, size.dpr, 0, 0);
     const computed = getComputedStyle(canvas);
     /** @param {string} name @param {string} fallback */
@@ -286,6 +291,12 @@ export function GraphicsArea({ onCanvasReady }) {
       >
         Interactive orbit graphics require Canvas 2D.
       </canvas>
+      {!canvasAvailable ? (
+        <div className={styles.canvasFallback} role="status">
+          Canvas 2D is unavailable. The deterministic CPU simulation and
+          diagnostics remain active; use the property and figure panels.
+        </div>
+      ) : null}
       <div className={styles.canvasHud}>
         <span>{frameLabel}</span>
         <span>XY projection · AU</span>
