@@ -1,95 +1,122 @@
 # Barycenter
 
-Barycenter는 AU · yr · 태양질량 단위에서 G=4π²를 사용하는 브라우저 기반
-3D N-body 중력 샌드박스입니다. 물리 상태는 Float64 3D로 유지하고,
-고정 스텝 leapfrog 또는 Yoshida 4차 심플렉틱 적분기로 장기 궤도 구조를
-보존합니다. Canvas 2D는 XY 투영을 표시하며, 에너지·각운동량·질량중심
-드리프트를 같은 완료 스텝 snapshot에서 계측합니다.
+> **심플렉틱 적분으로 장기 궤도 안정성을 보존하는 브라우저 기반 N-body 중력 샌드박스**
 
-현재 상태는 **Product Beta / Core v1 release candidate**입니다. 모든 로컬
-자동 release gate는 통과했지만 지원 브라우저의 물리 smoke와 최종 LCP를
-이 환경에서 측정할 수 없어 Core v1 표식은 보류했습니다.
+## 1. 소개 (Introduction)
 
-## 시작
+Barycenter는 다체 중력계, 삼체 문제, 태양계 궤도와 라그랑주점을 수치적으로
+시뮬레이션·시각화하는 순수 클라이언트 웹 애플리케이션입니다. 물리 상태는
+AU · yr · 태양질량 단위와 `G = 4π²`를 사용하는 Float64 3D 좌표로 유지하며,
+Canvas 2D에는 XY 기준면을 투영합니다.
 
-Node 24.14 계열과 pnpm 11.9를 사용합니다.
+고정 스텝 심플렉틱 적분과 결정론적 실행을 통해 같은 초기조건에서 같은 궤도를
+재현하고, 에너지·각운동량·질량중심 드리프트를 완료된 동일 스텝에서 계측하여
+시뮬레이션의 물리적 신뢰성을 직접 확인할 수 있습니다.
 
-    pnpm install --frozen-lockfile
-    pnpm dev
+**주요 기능**
 
-Production 확인:
+- **N-body 시뮬레이션**: 직접합산 `O(N²)` 중력, massive/tracer 역할, softening, 안전 정지
+- **장기 궤도 적분**: leapfrog·Yoshida 4차 production 경로와 RK4 비교 경로
+- **CR3BP 분석**: 관성·질량중심·회전 좌표계, L1–L5, 야코비 상수, 영속도 등고선
+- **인터랙티브 워크벤치**: 프리셋, Cartesian/Kepler 편집, pan·zoom·fit·측정, 진단 플롯
+- **재현과 내보내기**: URL 시나리오 공유, CSV, 사용자 시작 WebM, 고정 길이 trail·diagnostics
+- **선택형 자연어 시나리오**: 오프라인 참조 해석기 또는 격리된 외부 AI 프록시를 통한 요청 → 검토 → 적용
 
-    pnpm verify
-    pnpm release:verify
-    pnpm preview
+> **현재 상태:** Product Beta / Core v1 release candidate. 자동 릴리스 게이트는
+> 통과했지만 실제 지원 브라우저 smoke와 최종 LCP 계측이 남아 있어 Core v1
+> 표식은 보류하고 있습니다.
 
-## 주요 기능
+## 2. 기술 스택 (Tech Stack)
 
-- 직접합산 O(N²) CPU 중력, massive/tracer 역할, softening, safe stop
-- leapfrog·Yoshida4 production 경로와 RK4 비교 경로
-- 원형 이체, 주성–행성, Figure-8, CR3BP L4 Tadpole 프리셋
-- 관성·질량중심·회전 프레임, L1–L5, 야코비 상수, 영속도 등고선
-- 재생·고정 스텝·리셋, Cartesian/Kepler 편집, pan/zoom/fit/측정
-- 고정 길이 진단 및 총량 제한 trail, CSV, URL 공유, 사용자 시작 WebM
-- 선택형 자연어 ScenarioDraft 요청 → 검토 → 적용 흐름
-- Canvas 미지원 시에도 계속 동작하는 CPU 시뮬레이션·속성·진단·CSV 경로
+- **Frontend**: React 19, Vite 7, JavaScript/ESM + JSDoc
+- **Numerics**: 자작 Float64 3D 중력 코어, leapfrog, Yoshida4, RK4, CR3BP 해석 도구
+- **Rendering**: Canvas 2D XY 투영
+- **State Management**: Zustand
+- **Validation**: Vitest, ESLint, TypeScript `checkJs`, 결정론적 물리·성능 기준선
+- **Optional Backend**: 의존성 없는 Node `node:http` 자연어 시나리오 프록시
+- **Deployment**: 정적 `dist/` 아티팩트, SPA fallback, 해시 asset 캐시 정책
 
-## 자연어 시나리오
+## 3. 설치 및 실행 (Quick Start)
 
-정적 빌드는 프록시 없이 결정적 오프라인 참조 해석기를 사용합니다.
-외부 공급자를 활성화하려면 packages/ai-proxy를 별도 배포하고 공개
-VITE_BARYCENTER_AI_PROXY_URL만 클라이언트에 설정합니다. 공급자 키,
-upstream URL, 모델은 서버의 BARYCENTER_AI_* 환경변수에만 둡니다.
+**검증 기준:** Node.js 24.14.x, pnpm 11.9.0
 
-공급자·모델·비용은 아직 선택하지 않았으며 외부 API는 제품 실행의
-필수 조건이 아닙니다.
+`package.json`의 지원 범위는 Node.js `^22.13.0 || ^24.0.0`입니다.
 
-## 성능과 메모리
+1. **설치 (Install)**
 
-MSI Stealth 15 A13VF / i7-13620H / Windows High performance 기준
-결정적 N=500 fixture의 JavaScript p95 프레임 추정치는 7.2769ms입니다.
-N=2000은 67.1555ms로 realtime 범위 밖입니다. 따라서 직접합산 oracle을
-유지하고 Barnes-Hut/Worker는 향후 2000+ 천체 요구 시점으로 미뤘습니다.
+   ```bash
+   git clone https://github.com/JTech-CO/Barycenter.git
+   cd Barycenter
+   pnpm install --frozen-lockfile
+   ```
 
-Trail은 요청된 천체별 길이에 더해 전체 32768점 상한을 적용합니다.
-측정한 N=100/500/2000에서 trail typed-array 저장량은 약 0.8MB로
-고정됩니다.
+2. **환경 변수 (Environment)**
 
-    pnpm benchmark
-    pnpm report:performance
-    pnpm report:bundle
+   기본 시뮬레이터와 오프라인 자연어 해석기는 환경 변수 없이 동작합니다.
+   외부 AI 공급자를 연결할 때만 브라우저에 공개 프록시 경로를 설정하고,
+   자격 증명은 `packages/ai-proxy` 서버 환경에만 둡니다.
 
-## 정적 배포
+   ```bash
+   # 브라우저에 공개 가능한 프록시 경로
+   VITE_BARYCENTER_AI_PROXY_URL=http://localhost:8787/v1/scenario-drafts
 
-Production 빌드는 dist에 생성됩니다. 해시 asset에는 immutable 1년 cache,
-index.html에는 no-cache, 직접 URL에는 index fallback 정책이 포함됩니다.
+   # 프록시 서버 전용 — 클라이언트 번들 또는 저장소에 커밋하지 않음
+   BARYCENTER_AI_UPSTREAM_URL=https://provider.example/v1/generate
+   BARYCENTER_AI_API_KEY=replace-me
+   BARYCENTER_AI_MODEL=replace-me
+   ```
 
-    pnpm build
-    pnpm deploy:check
+   외부 공급자·모델은 아직 고정하지 않았으며, 프록시는 제품 실행의 필수
+   구성요소가 아닙니다. 자세한 경계는
+   [`packages/ai-proxy/README.md`](./packages/ai-proxy/README.md)를 참고하세요.
 
-실제 host가 public/_headers와 public/_redirects 형식을 지원하지 않으면
-같은 정책을 해당 host 설정으로 옮기십시오. 자연어 프록시는 정적
-배포와 독립적입니다.
+3. **실행 및 검증 (Run & Verify)**
 
-## 검증 계층
+   ```bash
+   pnpm dev
 
-- pnpm verify: lint, 브라우저/프록시 strict checkJs, 빠른 테스트, build,
-  bundle budget, 정적 artifact, secret 경계
-- pnpm test:physics:long: 1000주기 이체와 100주기 Figure-8 기준선
-- pnpm test:analysis: 회전 프레임·CR3BP·L1–L5·Jacobi 기준선
-- pnpm release:verify: 위 release 계층과 M7 benchmark
+   # 빠른 저장소 게이트
+   pnpm verify
 
-수치 근거는 reports/physics-baseline.md와 reports/analysis-baseline.md,
-성능·출시 근거는 reports/performance-baseline.md,
-reports/bundle-baseline.md, reports/core-v1-release-candidate.md에 있습니다.
+   # 장기 물리·CR3BP·성능을 포함한 릴리스 게이트
+   pnpm release:verify
+   ```
 
-## 알려진 제한
+   Production 빌드와 로컬 프리뷰는 다음과 같이 실행합니다.
 
-- 물리 브라우저 matrix와 최종 LCP가 완료되기 전까지 Core v1 표식을 쓰지
-  않습니다.
-- N=2000은 기준 장치에서 realtime이 아니며 Barnes-Hut/GPU가 없습니다.
-- 공유되는 비신뢰 Scenario는 128천체로 제한됩니다.
-- 렌더는 Canvas 2D XY 투영이며 3D orbit view는 후속 범위입니다.
-- WebM은 브라우저 MediaRecorder와 video/webm codec 지원이 필요합니다.
-- 충돌 병합은 없으며 근접 조우는 softening으로 다룹니다.
-- 외부 자연어 공급자는 미선택·미설정 상태입니다.
+   ```bash
+   pnpm build
+   pnpm preview
+   ```
+
+## 4. 폴더 구조 (Structure)
+
+```text
+Barycenter/
+├── src/
+│   ├── core/          # React·DOM과 분리된 결정론적 수치 코어
+│   ├── runtime/       # 시뮬레이션 실행, snapshot, bounded history
+│   ├── scenarios/     # 물리 프리셋과 시나리오 계약
+│   ├── render/        # Canvas 궤도·분석 렌더링
+│   ├── workbench/     # 데스크톱형 시뮬레이션 워크벤치
+│   ├── components/    # UI 컴포넌트
+│   ├── state/         # Zustand UI 상태
+│   ├── ai/            # ScenarioDraft 요청·검토·적용 흐름
+│   ├── export/        # CSV·WebM·공유 파일 경계
+│   └── validation/    # 물리·성능 fixture와 회귀 검증
+├── packages/ai-proxy/ # 선택형 외부 AI 프록시
+├── scripts/           # 검증·리포트·번들·배포 도구
+├── reports/           # 재현 가능한 물리·분석·성능 기준선
+├── public/            # 정적 배포 헤더와 SPA fallback
+└── .github/workflows/ # 빠른 CI와 예약/수동 릴리스 검증
+```
+
+## 5. 정보 (Info)
+
+- **Release status**: Product Beta / Core v1 release candidate
+- **Performance baseline**: 기준 장치에서 N=500 추정 p95 7.2769 ms, N=2000은 비실시간 범위
+- **Known limits**: Canvas 2D XY 투영, Barnes–Hut/GPU 미도입, 충돌 병합 미지원, 실제 브라우저/LCP 최종 확인 대기
+- **Documentation**: [기술 백서](./Barycenter_기술백서.md) · [마일스톤](./Barycenter_마일스톤.md) · [검증 보고서](./reports/README.md)
+- **Repository**: [JTech-CO/Barycenter](https://github.com/JTech-CO/Barycenter)
+- **Contact**: [GitHub Issues](https://github.com/JTech-CO/Barycenter/issues)
+- **License**: 현재 별도 라이선스 파일이 지정되어 있지 않습니다.
