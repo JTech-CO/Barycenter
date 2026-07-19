@@ -12,11 +12,18 @@ body,
   margin: 0;
 }
 
+html {
+  font-size: 16px;
+  text-size-adjust: 100%;
+}
+
 body {
   min-height: 100vh;
   overflow: hidden;
   background: var(--bg);
   font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.45;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -24,10 +31,11 @@ body {
 button,
 input,
 select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
 
 button {
   -webkit-tap-highlight-color: transparent;
-}
-textarea {
-  font: inherit;
 }
