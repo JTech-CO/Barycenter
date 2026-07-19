@@ -135,7 +135,7 @@ function drawGrid(context, width, height, camera, colors) {
   const minY = camera.centerY - halfWorldHeight;
   const maxY = camera.centerY + halfWorldHeight;
   context.lineWidth = 1;
-  context.font = '10px ui-monospace, monospace';
+  context.font = "12px ui-monospace, 'Cascadia Mono', Consolas, monospace";
   context.fillStyle = colors.text;
   context.textBaseline = 'top';
   for (let x = Math.ceil(minX / step) * step; x <= maxX; x += step) {
@@ -160,7 +160,7 @@ function drawGrid(context, width, height, camera, colors) {
       context.fillText(`${Number(y.toPrecision(4))}`, 4, screen.y + 2);
     }
   }
-  context.fillText('AU', width - 24, height - 18);
+  context.fillText('AU', width - 30, height - 20);
 }
 
 /**

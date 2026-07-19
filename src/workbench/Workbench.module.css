@@ -208,8 +208,8 @@
 }
 
 .ribbonCommands > .numberField {
-  width: 142px;
-  min-width: 142px;
+  width: 176px;
+  min-width: 176px;
   align-content: center;
   padding: 2px 9px;
   border-right: 1px solid var(--border);
@@ -1293,7 +1293,8 @@
 
 .panelHeader span,
 .dockHeader span {
-  font-size: 11px;
+  font-family: var(--font-ui);
+  font-size: 12px;
   line-height: 1.25;
 }
 
@@ -1335,8 +1336,24 @@
 .textField,
 .selectField,
 .numberField {
-  grid-template-columns: 82px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 8px;
+}
+
+.ribbonCommands > .numberField {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.textField > span,
+.selectField > span,
+.scrubLabel {
+  min-width: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.ribbonCommands .scrubLabel {
+  white-space: nowrap;
 }
 
 .textField > span,
@@ -1350,6 +1367,8 @@
 .selectField select,
 .inputShell {
   height: 32px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .inputShell input {
@@ -1359,7 +1378,11 @@
 }
 
 .inputShell span {
-  font-size: 10px;
+  min-width: 0;
+  max-width: 60px;
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
 }
 
 .emptyMessage,
@@ -1369,10 +1392,25 @@
   line-height: 1.55;
 }
 
-.canvasHud,
+.canvasHud {
+  gap: 4px;
+  padding: 8px 10px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.canvasHud span:first-child {
+  font-weight: 600;
+}
+
+.canvasHud span:last-child {
+  font-size: 12px;
+}
+
 .measureBadge,
 .measureResult {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.4;
 }
 
@@ -1383,11 +1421,11 @@
 .monitor > header > span,
 .monitorMetrics span,
 .monitor > p {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .monitorMetrics strong {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .figureDock {
@@ -1395,22 +1433,26 @@
 }
 
 .figureList > section > button {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .miniPlot figcaption,
 .miniPlot figcaption strong,
 .plotEmpty {
-  font-size: 10px;
+  font-size: 11px;
+}
+
+.miniPlot figcaption strong {
+  font-size: 12px;
 }
 
 .analysisNote strong,
 .analysisNote span {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .analysisNote p {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .consolePanel {
@@ -1418,11 +1460,11 @@
 }
 
 .consolePanel header {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .consolePanel > div {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.55;
 }
 
@@ -1436,7 +1478,7 @@
 .scenarioComposerReview > header span,
 .scenarioComposerReview dt,
 .scenarioComposerReview code {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .scenarioComposer > header span,
@@ -1461,7 +1503,7 @@
 }
 
 .scenarioComposerReview dd {
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .scenarioComposer form > footer button {
@@ -1469,7 +1511,7 @@
 }
 
 .statusbar {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 @media (max-width: 1240px) {
