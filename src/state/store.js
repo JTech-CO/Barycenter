@@ -34,7 +34,7 @@ import { create } from 'zustand';
  * @property {boolean} measurementMode
  * @property {number | null} measurementFromId
  * @property {Measurement | null} measurement
- * @property {{type: 'fit' | 'zoom-in' | 'zoom-out', sequence: number}} cameraCommand
+ * @property {{type: 'fit' | 'zoom-in' | 'zoom-out' | 'focus', sequence: number, targetId: number | null}} cameraCommand
  * @property {ConsoleLog[]} consoleLogs
  * @property {string | null} notice
  * @property {boolean} recording
@@ -45,7 +45,7 @@ import { create } from 'zustand';
  * @property {(figure: BaryStore['activeFigure']) => void} setActiveFigure
  * @property {() => void} toggleMeasurementMode
  * @property {(id: number, bodies: import('../core/state.js').Body[]) => void} registerMeasurementHit
- * @property {(type: BaryStore['cameraCommand']['type']) => void} requestCamera
+ * @property {(type: BaryStore['cameraCommand']['type'], targetId?: number | null) => void} requestCamera
  * @property {(level: ConsoleLog['level'], message: string) => void} addConsoleLog
  * @property {(notice: string | null) => void} setNotice
  * @property {(recording: boolean) => void} setRecording
@@ -77,7 +77,7 @@ const createBaryStore = (set) => ({
   measurementMode: false,
   measurementFromId: null,
   measurement: null,
-  cameraCommand: { type: 'fit', sequence: 0 },
+  cameraCommand: { type: 'fit', sequence: 0, targetId: null },
   consoleLogs: [
     { level: 'info', message: '수치 코어와 Analysis Alpha 기준선을 불러왔습니다.' },
   ],
@@ -140,9 +140,13 @@ const createBaryStore = (set) => ({
         },
       };
     }),
-  requestCamera: (type) =>
+  requestCamera: (type, targetId = null) =>
     set((state) => ({
-      cameraCommand: { type, sequence: state.cameraCommand.sequence + 1 },
+      cameraCommand: {
+        type,
+        sequence: state.cameraCommand.sequence + 1,
+        targetId: type === 'focus' ? targetId : null,
+      },
     })),
   addConsoleLog: (level, message) =>
     set((state) => ({
@@ -160,7 +164,7 @@ const createBaryStore = (set) => ({
       measurementMode: false,
       measurementFromId: null,
       measurement: null,
-      cameraCommand: { type: 'fit', sequence: 0 },
+      cameraCommand: { type: 'fit', sequence: 0, targetId: null },
       consoleLogs: [
         { level: 'info', message: 'Barycenter 세션을 초기화했습니다.' },
       ],

@@ -31,6 +31,28 @@ export function panCamera(camera, dxPixels, dyPixels) {
 
 /**
  * @param {Camera} camera
+ * @param {{x: number, y: number}} point
+ * @param {number} [minimumScale]
+ */
+export function focusCamera(camera, point, minimumScale = 180) {
+  if (
+    !Number.isFinite(point.x) ||
+    !Number.isFinite(point.y) ||
+    !Number.isFinite(minimumScale) ||
+    !(minimumScale > 0)
+  ) {
+    throw new ValidationError(
+      'Camera focus must use finite coordinates and a positive scale.',
+    );
+  }
+  camera.centerX = point.x;
+  camera.centerY = point.y;
+  camera.scale = Math.min(20_000, Math.max(camera.scale, minimumScale));
+  return camera;
+}
+
+/**
+ * @param {Camera} camera
  * @param {number} factor
  * @param {number} anchorX
  * @param {number} anchorY

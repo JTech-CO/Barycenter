@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   createCamera,
   fitCamera,
+  focusCamera,
   panCamera,
   zoomCamera,
 } from '../render/camera.js';
@@ -37,6 +38,9 @@ export function GraphicsArea({ onCanvasReady }) {
   );
   const canvasRef = useRef(/** @type {HTMLCanvasElement | null} */ (null));
   const cameraRef = useRef(createCamera());
+  const handledCameraCommandRef = useRef(
+    /** @type {typeof cameraCommand | null} */ (null),
+  );
   const drawResultRef = useRef(/** @type {DrawResult | null} */ (null));
   const dragRef = useRef(
     /** @type {{pointerId: number, x: number, y: number, moved: boolean} | null} */ (
@@ -46,6 +50,16 @@ export function GraphicsArea({ onCanvasReady }) {
   const [size, setSize] = useState({ width: 0, height: 0, dpr: 1 });
   const [cameraRevision, setCameraRevision] = useState(0);
   const [canvasAvailable, setCanvasAvailable] = useState(true);
+  const snapshotRef = useRef(snapshot);
+  const sizeRef = useRef(size);
+
+  useEffect(() => {
+    snapshotRef.current = snapshot;
+  }, [snapshot]);
+
+  useEffect(() => {
+    sizeRef.current = size;
+  }, [size]);
 
   useEffect(() => {
     if (!onCanvasReady) return undefined;
@@ -83,35 +97,59 @@ export function GraphicsArea({ onCanvasReady }) {
   }, []);
 
   const fit = useCallback(() => {
-    if (size.width === 0 || size.height === 0) return;
-    const projected = projectSnapshot(snapshot);
+    const currentSize = sizeRef.current;
+    if (currentSize.width === 0 || currentSize.height === 0) return;
+    const projected = projectSnapshot(snapshotRef.current);
     fitCamera(
       cameraRef.current,
       projected.bodies.map((body) => ({
         x: body.projectedPosition[0],
         y: body.projectedPosition[1],
       })),
-      size.width,
-      size.height,
+      currentSize.width,
+      currentSize.height,
       72,
     );
     setCameraRevision((revision) => revision + 1);
-  }, [size.height, size.width, snapshot]);
+  }, []);
 
   useEffect(() => {
+    if (
+      size.width === 0 ||
+      size.height === 0 ||
+      handledCameraCommandRef.current === cameraCommand
+    ) {
+      return undefined;
+    }
     const frameId = requestAnimationFrame(() => {
+      const currentSize = sizeRef.current;
+      if (currentSize.width === 0 || currentSize.height === 0) return;
+      handledCameraCommandRef.current = cameraCommand;
       if (cameraCommand.type === 'fit') {
         fit();
+        return;
+      }
+      if (cameraCommand.type === 'focus') {
+        const target = projectSnapshot(snapshotRef.current).bodies.find(
+          (body) => body.id === cameraCommand.targetId,
+        );
+        if (target) {
+          focusCamera(cameraRef.current, {
+            x: target.projectedPosition[0],
+            y: target.projectedPosition[1],
+          });
+          setCameraRevision((revision) => revision + 1);
+        }
         return;
       }
       const factor = cameraCommand.type === 'zoom-in' ? 1.35 : 1 / 1.35;
       zoomCamera(
         cameraRef.current,
         factor,
-        size.width * 0.5,
-        size.height * 0.5,
-        size.width,
-        size.height,
+        currentSize.width * 0.5,
+        currentSize.height * 0.5,
+        currentSize.width,
+        currentSize.height,
       );
       setCameraRevision((revision) => revision + 1);
     });

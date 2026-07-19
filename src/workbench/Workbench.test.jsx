@@ -100,6 +100,10 @@ describe('Product Beta workbench flow', () => {
     const bodyTree = screen.getByRole('list', { name: 'Simulation bodies' });
     const bodyButtons = within(bodyTree).getAllByRole('button');
     await user.click(bodyButtons[1]);
+    expect(useBaryStore.getState().cameraCommand).toMatchObject({
+      type: 'focus',
+      targetId: useBaryStore.getState().selectedId,
+    });
     const nameInput = screen.getByLabelText('Name');
     await user.clear(nameInput);
     await user.type(nameInput, 'Edited secondary');

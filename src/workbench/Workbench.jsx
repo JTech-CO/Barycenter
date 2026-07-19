@@ -142,6 +142,7 @@ function SpecificationTree({ snapshot, selectedId, onSelect }) {
               type="button"
               data-selected={body.id === selectedId || undefined}
               aria-current={body.id === selectedId ? 'true' : undefined}
+              title={'Focus camera on ' + body.name}
               onClick={() => onSelect(body.id)}
             >
               <span
@@ -905,6 +906,14 @@ function Workbench({ initialWarning }) {
     [addConsoleLog, setNotice],
   );
 
+  const selectAndFocusBody = useCallback(
+    (/** @type {number} */ id) => {
+      selectBody(id);
+      requestCamera('focus', id);
+    },
+    [requestCamera, selectBody],
+  );
+
   useEffect(
     () =>
       observeRuntimePerformance((metric) => {
@@ -1135,7 +1144,7 @@ function Workbench({ initialWarning }) {
           <SpecificationTree
             snapshot={snapshot}
             selectedId={selectedId}
-            onSelect={selectBody}
+            onSelect={selectAndFocusBody}
           />
           <PropertyManager
             snapshot={snapshot}
